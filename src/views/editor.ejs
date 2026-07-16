@@ -1,0 +1,95 @@
+<%- include('partials/header') %>
+  <div class="editor-page">
+    <aside class="editor-sidebar">
+      <div class="editor-sidebar-header">
+        <h3>Documents</h3>
+        <a href="/editor" class="btn btn-primary btn-icon" title="New document">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z"/></svg>
+        </a>
+      </div>
+      <div class="sidebar-docs">
+        <% if (typeof docs !== 'undefined' && docs && docs.length > 0) { %>
+          <% docs.forEach(function(d) { %>
+            <a href="/editor?id=<%= d.id %>" class="sidebar-doc <%= parseInt(d.id) === parseInt(doc.id) ? 'active' : '' %>">
+              <%= d.title %>
+            </a>
+          <% }); %>
+        <% } else { %>
+          <div class="sidebar-empty">No documents yet</div>
+        <% } %>
+      </div>
+    </aside>
+    <div class="editor-main">
+      <div class="editor-toolbar">
+        <button type="button" data-cmd="bold" title="Bold (Ctrl+B)">
+          <svg viewBox="0 0 16 16" fill="currentColor"><path d="M4 2h4.5a3.5 3.5 0 0 1 2.654 5.82A3.5 3.5 0 0 1 9.5 14H4a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1Zm2.5 4.5H9a1 1 0 0 0 0-2H6.5v2Zm0 4.5H10a1 1 0 0 0 0-2H6.5v2Z"/></svg>
+        </button>
+        <button type="button" data-cmd="italic" title="Italic (Ctrl+I)">
+          <svg viewBox="0 0 16 16" fill="currentColor"><path d="M6 2h6v2H9.5l-3 8H10v2H4v-2h2.5l3-8H6V2Z"/></svg>
+        </button>
+        <button type="button" data-cmd="strikethrough" title="Strikethrough">
+          <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 2c2.5 0 4 1.5 4 3.5h-2c0-1-1-2-2-2s-2 .7-2 1.5c0 .5.3.8.8 1.1.2.1.5.2.9.4H4.6c-.4-.3-.7-.6-.9-1A2.5 2.5 0 0 1 8 2ZM2.5 8h11v1.5h-2.3l.8 1.8c.2.4.3.9 0 1.4-.5 1.2-1.7 1.8-3.2 1.8-1.8 0-3.3-.8-4-2.3l1.5-.8c.4.8 1.3 1.3 2.5 1.3 1 0 1.8-.4 1.8-1.2 0-.5-.3-.8-.9-1.2l-.3-.1H4.5c-.7 0-1.3-.3-1.7-.7-.3-.3-.5-.8-.5-1.3 0-.2 0-.4.2-.7H2.5V8Z"/></svg>
+        </button>
+        <span class="toolbar-sep"></span>
+        <button type="button" data-cmd="heading" title="Heading">
+          <svg viewBox="0 0 16 16" fill="currentColor"><path d="M3.75 2a.75.75 0 0 1 .75.75V7h7V2.75a.75.75 0 0 1 1.5 0v10.5a.75.75 0 0 1-1.5 0V8.5h-7v4.75a.75.75 0 0 1-1.5 0V2.75A.75.75 0 0 1 3.75 2Z"/></svg>
+        </button>
+        <button type="button" data-cmd="code" title="Code block">
+          <svg viewBox="0 0 16 16" fill="currentColor"><path d="M4.72 3.22a.75.75 0 0 1 1.06 1.06L2.06 8l3.72 3.72a.75.75 0 1 1-1.06 1.06L.47 8.53a.75.75 0 0 1 0-1.06l4.25-4.25Zm6.56 0a.75.75 0 1 0-1.06 1.06L13.94 8l-3.72 3.72a.75.75 0 1 0 1.06 1.06l4.25-4.25a.75.75 0 0 0 0-1.06l-4.25-4.25Z"/></svg>
+        </button>
+        <button type="button" data-cmd="link" title="Link">
+          <svg viewBox="0 0 16 16" fill="currentColor"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .75.75 0 0 1 .018-1.042.75.75 0 0 1 1.042-.018 2 2 0 0 0 2.83 0l2.5-2.5a2 2 0 0 0-2.83-2.83l-1.25 1.25a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042Zm-4.69 9.64a2 2 0 0 0 2.83 0l1.25-1.25a.75.75 0 0 1 1.042.018.75.75 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .75.75 0 0 1-.018 1.042.75.75 0 0 1-1.042.018 2 2 0 0 0-2.83 0l-2.5 2.5a2 2 0 0 0 0 2.83Z"/></svg>
+        </button>
+        <button type="button" data-cmd="image" title="Image">
+          <svg viewBox="0 0 16 16" fill="currentColor"><path d="M6 3.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0ZM1.5 12a.5.5 0 0 0 .5.5h12a.5.5 0 0 0 .5-.5V4a.5.5 0 0 0-.5-.5h-12a.5.5 0 0 0-.5.5v8ZM0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Z"/></svg>
+        </button>
+        <span class="toolbar-sep"></span>
+        <button type="button" data-cmd="list" title="Unordered list">
+          <svg viewBox="0 0 16 16" fill="currentColor"><path d="M2 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm3.75-2.5h9.5a.75.75 0 0 1 0 1.5h-9.5a.75.75 0 0 1 0-1.5Zm0 5h9.5a.75.75 0 0 1 0 1.5h-9.5a.75.75 0 0 1 0-1.5Zm0 5h9.5a.75.75 0 0 1 0 1.5h-9.5a.75.75 0 0 1 0-1.5ZM2 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm0 5a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"/></svg>
+        </button>
+        <button type="button" data-cmd="olist" title="Ordered list">
+          <svg viewBox="0 0 16 16" fill="currentColor"><path d="M2.003 2.5v1.5h2v.5H3.5a.5.5 0 0 0 0 1h.5v.5h-2v1.5h2.5a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 0-.5-.5Zm5.247.5h9.5a.75.75 0 0 1 0 1.5h-9.5a.75.75 0 0 1 0-1.5Zm0 5h9.5a.75.75 0 0 1 0 1.5h-9.5a.75.75 0 0 1 0-1.5Zm0 5h9.5a.75.75 0 0 1 0 1.5h-9.5a.75.75 0 0 1 0-1.5Zm-5.247-.5v-1.5h-2v-.5h.5a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1.5a.5.5 0 0 0 0 1h1v.5h-.5a.5.5 0 0 0 0 1h.5v.5h-2v1.5h2.5a.5.5 0 0 0 0-.5Z"/></svg>
+        </button>
+        <button type="button" data-cmd="blockquote" title="Blockquote">
+          <svg viewBox="0 0 16 16" fill="currentColor"><path d="M2.5 3a.5.5 0 0 0 0 1h11a.5.5 0 0 0 0-1h-11Zm0 3a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1h-6Zm0 3a.5.5 0 0 0 0 1h11a.5.5 0 0 0 0-1h-11Zm0 3a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1h-6Z"/></svg>
+        </button>
+        <span class="toolbar-sep"></span>
+        <button type="button" data-cmd="hr" title="Horizontal rule">
+          <svg viewBox="0 0 16 16" fill="currentColor"><path d="M0 8a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H1a1 1 0 0 1-1-1Z"/></svg>
+        </button>
+        <button type="button" data-cmd="table" title="Insert table">
+          <svg viewBox="0 0 16 16" fill="currentColor"><path d="M0 1.75A.75.75 0 0 1 .75 1h14.5a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75H.75a.75.75 0 0 1-.75-.75Zm1.5 5.5v1.5h4v-1.5Zm4-1.5v-1.5h-4v1.5Zm-4 4.5v1.5h4v-1.5Zm5.5 0v1.5h4v-1.5Zm4-4.5v-1.5h-4v1.5Zm-4 4.5h4v-1.5h-4Zm5.5-4.5h1.5v-1.5H13Zm1.5 1.5H13v1.5h1.5Z"/></svg>
+        </button>
+      </div>
+      <div class="editor-header">
+        <input type="text" id="doc-title" value="<%= doc.title %>" placeholder="Untitled document">
+        <div class="editor-actions">
+          <span class="save-indicator" id="save-indicator">
+            <span class="dot saved" id="save-dot"></span>
+            <span id="save-text">Saved</span>
+          </span>
+          <button id="save-btn" class="btn btn-primary">Save</button>
+        </div>
+      </div>
+      <div class="editor-body">
+        <div class="editor-pane" id="editor-pane">
+          <div class="editor-pane-label">Markdown</div>
+          <textarea id="editor-textarea" placeholder="Write your markdown here..."><%= doc.content %></textarea>
+        </div>
+        <div class="resize-handle" id="resize-handle"></div>
+        <div class="editor-pane" id="preview-pane">
+          <div class="editor-pane-label">Preview</div>
+          <div id="editor-preview" class="markdown-body"></div>
+        </div>
+      </div>
+      <div class="editor-statusbar">
+        <span id="word-count">0 words</span>
+        <span id="line-count">0 lines</span>
+        <span id="char-count">0 characters</span>
+      </div>
+      <input type="hidden" id="doc-id" value="<%= doc.id || '' %>">
+    </div>
+  </div>
+  <script src="/js/editor.js"></script>
+</body>
+</html>

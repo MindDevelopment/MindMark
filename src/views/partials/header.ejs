@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MindMark</title>
+  <link rel="icon" type="image/png" href="/images/logo.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.0/styles/github-dark.min.css">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a href="/" class="logo">
+        <img src="/images/logo.png" alt="MindMark" class="logo-img">
+      </a>
+      <div class="nav-links">
+        <% if (typeof user !== 'undefined' && user) { %>
+          <span class="nav-user"><%= user %></span>
+          <a href="/editor" class="btn btn-primary">New Document</a>
+          <a href="/logout" class="btn btn-secondary">Logout</a>
+        <% } else { %>
+          <a href="/login" class="btn btn-secondary">Login</a>
+          <a href="/register" class="btn btn-primary">Sign Up</a>
+        <% } %>
+      </div>
+    </div>
+  </nav>

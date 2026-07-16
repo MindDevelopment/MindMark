@@ -1,0 +1,28 @@
+{
+  "name": "mindmark",
+  "version": "1.0.0",
+  "description": "NodeJS markdown viewer and editor",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.4.7",
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "express-session": "^1.18.1",
+    "highlight.js": "^11.11.0",
+    "mariadb": "^3.4.0",
+    "marked": "^15.0.6",
+    "dompurify": "^3.2.4",
+    "jsdom": "^26.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  },
+  "keywords": [],
+  "author": "MindDevelopment",
+  "license": "MIT"
+}

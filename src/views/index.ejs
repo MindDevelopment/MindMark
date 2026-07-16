@@ -1,0 +1,124 @@
+<%- include('partials/header') %>
+<main class="container">
+  <% if (typeof user !== 'undefined' && user) { %>
+    <div class="dashboard">
+      <div class="dashboard-header">
+        <h2>My Documents</h2>
+        <a href="/editor" class="btn btn-primary">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z"/></svg>
+          New Document
+        </a>
+      </div>
+      <div class="dashboard-grid">
+        <div class="dashboard-main">
+          <div class="card">
+            <div class="card-header">
+              <h3>All documents</h3>
+            </div>
+            <div class="card-body">
+              <% if (docs.length > 0) { %>
+                <table class="doc-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Created</th>
+                      <th>Updated</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% docs.forEach(function(doc) { %>
+                      <tr>
+                        <td>
+                          <a href="/editor?id=<%= doc.id %>" class="doc-name"><%= doc.title %></a>
+                        </td>
+                        <td class="doc-meta"><%= new Date(doc.created_at).toLocaleDateString('nl-NL', { year:'numeric', month:'short', day:'numeric' }) %></td>
+                        <td class="doc-meta"><%= new Date(doc.updated_at).toLocaleDateString('nl-NL', { year:'numeric', month:'short', day:'numeric', hour:'2-digit', minute:'2-digit' }) %></td>
+                      </tr>
+                    <% }); %>
+                  </tbody>
+                </table>
+              <% } else { %>
+                <div class="doc-empty">
+                  <svg width="48" height="48" viewBox="0 0 16 16" fill="currentColor"><path d="M2 1.75C2 .784 2.784 0 3.75 0h5.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 12.25 16h-8.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25V5h-2.75A1.75 1.75 0 0 1 8 3.25V1.5Z"/></svg>
+                  <p>You haven't created any documents yet.</p>
+                  <a href="/editor" class="btn btn-primary" style="margin-top:16px;">Create your first document</a>
+                </div>
+              <% } %>
+            </div>
+          </div>
+        </div>
+        <div class="dashboard-sidebar">
+          <div class="card">
+            <div class="card-header">
+              <h3>Overview</h3>
+            </div>
+            <div class="card-body">
+              <div class="stat-grid">
+                <div class="stat-item">
+                  <div class="stat-value"><%= docCount %></div>
+                  <div class="stat-label">Documents</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-value"><%= docs.filter(function(d) { var t = new Date(d.updated_at); var today = new Date(); return t.getDate() === today.getDate() && t.getMonth() === today.getMonth() && t.getFullYear() === today.getFullYear(); }).length %></div>
+                  <div class="stat-label">Edited today</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <h3>Quick actions</h3>
+            </div>
+            <div class="card-body">
+              <div class="quick-actions">
+                <a href="/editor" class="quick-action-btn">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z"/></svg>
+                  New document
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% } else { %>
+    <div class="hero">
+      <h1>Write with <span>MindMark</span></h1>
+      <p class="hero-sub">A clean markdown editor. Write, preview, and save your documents.</p>
+      <div class="hero-actions">
+        <a href="/register" class="btn btn-primary btn-lg">Get Started</a>
+        <a href="/login" class="btn btn-secondary btn-lg">Login</a>
+      </div>
+    </div>
+
+    <div class="features">
+      <div class="feature-card">
+        <div class="feature-icon" style="background:var(--color-accent-subtle);color:var(--color-accent-fg);">✍</div>
+        <h3>Rich Editor</h3>
+        <p>Toolbar with bold, italic, headings, code blocks, tables, lists, and more.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background:var(--color-success-subtle);color:var(--color-success-fg);">👁</div>
+        <h3>Live Preview</h3>
+        <p>See your rendered markdown in real time with a resizable side-by-side preview.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background:var(--color-attention-subtle);color:var(--color-attention-fg);">💾</div>
+        <h3>Save &amp; Organize</h3>
+        <p>Create an account to save your documents and access them from anywhere.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background:var(--color-canvas-subtle);color:var(--color-fg-muted);">🔧</div>
+        <h3>Markdown Tools</h3>
+        <p>Syntax highlighting for code blocks, tables, task lists, and full GFM support.</p>
+      </div>
+    </div>
+
+    <div class="welcome-section">
+      <h2>Ready to start writing?</h2>
+      <p>Create a free account to save your markdown documents.</p>
+      <a href="/register" class="btn btn-primary btn-lg">Create your account</a>
+    </div>
+  <% } %>
+</main>
+<%- include('partials/footer') %>
