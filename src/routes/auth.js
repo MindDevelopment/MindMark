@@ -87,7 +87,7 @@ router.get('/settings', requireAuth, async (req, res) => {
 router.post('/settings', requireAuth, async (req, res) => {
   const { query } = require('../config/db');
   const { theme } = req.body;
-  const validThemes = ['dark', 'light'];
+  const validThemes = ['dark', 'light', 'blue', 'green', 'purple'];
   if (!validThemes.includes(theme)) {
     const users = await query('SELECT theme FROM users WHERE id = ?', [req.session.userId]);
     const userTheme = users.length > 0 ? users[0].theme : 'dark';

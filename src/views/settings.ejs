@@ -15,6 +15,9 @@
           <select id="theme" name="theme" onchange="previewTheme(this.value)">
             <option value="dark" <%= userTheme === 'dark' ? 'selected' : '' %>>Dark</option>
             <option value="light" <%= userTheme === 'light' ? 'selected' : '' %>>Light</option>
+            <option value="blue" <%= userTheme === 'blue' ? 'selected' : '' %>>Blue</option>
+            <option value="green" <%= userTheme === 'green' ? 'selected' : '' %>>Green</option>
+            <option value="purple" <%= userTheme === 'purple' ? 'selected' : '' %>>Purple</option>
           </select>
           <p class="input-hint">Changes apply immediately and are saved to your profile.</p>
         </div>
