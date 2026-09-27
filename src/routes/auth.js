@@ -2,6 +2,7 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 const router = express.Router();
 const { query } = require('../config/db');
+const { requireAuth } = require('../middleware/auth');
 
 router.get('/login', (req, res) => {
   if (req.session.userId) return res.redirect('/');
@@ -69,6 +70,55 @@ router.get('/logout', (req, res) => {
   req.session.destroy(() => {
     res.redirect('/');
   });
+});
+
+router.get('/settings', requireAuth, async (req, res) => {
+  const { query } = require('../config/db');
+  const users = await query('SELECT theme FROM users WHERE id = ?', [req.session.userId]);
+  const userTheme = users.length > 0 ? users[0].theme : 'dark';
+  res.render('settings', {
+    user: req.session.username,
+    userTheme,
+    error: null,
+    success: null
+  });
+});
+
+router.post('/settings', requireAuth, async (req, res) => {
+  const { query } = require('../config/db');
+  const { theme } = req.body;
+  const validThemes = ['dark', 'light'];
+  if (!validThemes.includes(theme)) {
+    const users = await query('SELECT theme FROM users WHERE id = ?', [req.session.userId]);
+    const userTheme = users.length > 0 ? users[0].theme : 'dark';
+    return res.render('settings', {
+      user: req.session.username,
+      userTheme,
+      error: 'Invalid theme selected',
+      success: null
+    });
+  }
+  try {
+    await query('UPDATE users SET theme = ? WHERE id = ?', [theme, req.session.userId]);
+    const users = await query('SELECT theme FROM users WHERE id = ?', [req.session.userId]);
+    const userTheme = users.length > 0 ? users[0].theme : 'dark';
+    res.render('settings', {
+      user: req.session.username,
+      userTheme,
+      error: null,
+      success: 'Theme updated successfully'
+    });
+  } catch (err) {
+    console.error(err);
+    const users = await query('SELECT theme FROM users WHERE id = ?', [req.session.userId]);
+    const userTheme = users.length > 0 ? users[0].theme : 'dark';
+    res.render('settings', {
+      user: req.session.username,
+      userTheme,
+      error: 'Failed to update theme',
+      success: null
+    });
+  }
 });
 
 module.exports = router;

@@ -1,0 +1,38 @@
+<%- include('partials/header') %>
+<main class="container">
+  <div class="auth-page" style="max-width: 500px;">
+    <div class="auth-card">
+      <h1>Settings</h1>
+      <% if (typeof error !== 'undefined' && error) { %>
+        <div class="alert alert-error"><%= error %></div>
+      <% } %>
+      <% if (typeof success !== 'undefined' && success) { %>
+        <div class="alert alert-success"><%= success %></div>
+      <% } %>
+      <form method="POST" action="/settings">
+        <div class="form-group">
+          <label for="theme">Theme</label>
+          <select id="theme" name="theme" onchange="previewTheme(this.value)">
+            <option value="dark" <%= userTheme === 'dark' ? 'selected' : '' %>>Dark</option>
+            <option value="light" <%= userTheme === 'light' ? 'selected' : '' %>>Light</option>
+          </select>
+          <p class="input-hint">Changes apply immediately and are saved to your profile.</p>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Save Theme</button>
+      </form>
+      <p class="auth-link" style="margin-top: 24px;"><a href="/">Back to Dashboard</a></p>
+    </div>
+  </div>
+</main>
+<script>
+  function previewTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    var hljsTheme = document.getElementById('hljs-theme');
+    if (theme === 'light') {
+      hljsTheme.href = 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.0/styles/github.min.css';
+    } else {
+      hljsTheme.href = 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.0/styles/github-dark.min.css';
+    }
+  }
+</script>
+<%- include('partials/footer') %>
